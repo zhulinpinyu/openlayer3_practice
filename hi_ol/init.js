@@ -1,4 +1,5 @@
-var map;
+var map,vectorLayer,baselayer;
+
 function init(){
   map = new ol.Map({
     target: 'map',
@@ -9,22 +10,28 @@ function init(){
       zoom: 5
     })
   });
-  var baselayer = new ol.layer.Tile({
+  baselayer = new ol.layer.Tile({
     source: new ol.source.OSM()
   });
 
-  var vectorLayer = new ol.layer.Tile({
+  vectorLayer = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       preload: Infinity,
       url: 'http://felek.cns.umass.edu:8080/geoserver/wms',
       serverType: 'geoserver',
       params: {
-        'LAYERS': "Streams:Developed", 'TILED':true
+        'LAYERS': "Streams:Developed", 'TILED': true
       }
     })
   });
-
+  //设置透明度
+  //vectorLayer.setOpacity(.3);
   map.addLayer(baselayer);
   map.addLayer(vectorLayer);
+}
+
+function removeTopLayer(){
+  //map.removeLayer(vectorLayer);
+  vectorLayer.setVisible(false);
 }
 
