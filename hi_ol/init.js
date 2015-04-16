@@ -3,7 +3,8 @@ var map,
     vectorLayer,
     vectorLayer2,
     styleCache,
-    geoLayer;
+    geoLayer,
+    drawLayer;
 
 function init(){
   map = new ol.Map({
@@ -77,12 +78,32 @@ function init(){
   });
 
 
+  drawLayer = new ol.layer.Vector({
+    source: new ol.source.Vector(),
+    style: new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: 'rgba(255,255,255,0.2)'
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#ffcc33',
+        width: 2
+      }),
+      image: new ol.style.Circle({
+        radius: 6,
+        fill: new ol.style.Fill({
+          color: '#ffcc33'
+        })
+      })
+    })
+  });
+
   //设置透明度
   //vectorLayer.setOpacity(.3);
   map.addLayer(baselayer);
   //map.addLayer(vectorLayer);
   map.addLayer(vectorLayer2);
   map.addLayer(geoLayer);
+  map.addLayer(drawLayer);
 
   //Attribution
   // var myAttributionControl = new ol.control.Attribution({
@@ -129,6 +150,7 @@ function init(){
   map.addControl(myZoomToExtentControl);
 
   map.on('singleclick',function(evt){
+    if(draw!=null) return;
     var coord = evt.coordinate;
     var viewProjction = map.getView().getProjection();
     var viewResolution = map.getView().getResolution();
@@ -143,7 +165,7 @@ function init(){
     }else{
       console.log('Oh no.');
     }
-    spawnPopup(coord, viewProjction.a);
+    //spawnPopup(coord, viewProjction.a);
   });
 
   function spawnPopup(coord,projection){
@@ -167,3 +189,23 @@ function swapTopLayer(){
   var topLayer = layers.removeAt(2);
   layers.insert(1,topLayer);
 }
+
+
+//Draw
+var draw;
+function startDraw(type){
+  if(draw!=null){
+    cancelDraw();
+  }
+  draw = new ol.interaction.Draw({
+    source: drawLayer.getSource(),
+    type: type
+  });
+  map.addInteraction(draw);
+}
+
+function cancelDraw(){
+  if(draw==null) return;
+  map.removeInteraction(draw);
+}
+
