@@ -127,6 +127,12 @@ function init(){
     extent: undefined
   });
   map.addControl(myZoomToExtentControl);
+
+  map.on('singleclick',function(evt){
+    var coord = evt.coordinate;
+    var transformed_coordinate = ol.proj.transform(coord, 'EPSG:900913', 'EPSG:4326');
+    console.log(transformed_coordinate);
+  });
 }
 
 function removeTopLayer(){
