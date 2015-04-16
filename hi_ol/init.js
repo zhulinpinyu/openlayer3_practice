@@ -130,9 +130,31 @@ function init(){
 
   map.on('singleclick',function(evt){
     var coord = evt.coordinate;
-    var transformed_coordinate = ol.proj.transform(coord, 'EPSG:900913', 'EPSG:4326');
-    console.log(transformed_coordinate);
+    var viewProjction = map.getView().getProjection();
+    var viewResolution = map.getView().getResolution();
+    var url = vectorLayer.getSource().getGetFeatureInfoUrl(coord,viewResolution, viewProjction,{
+      'INFO_FORMAT': 'application/json'
+    });
+    if(url){
+      console.log(url);
+      $.getJSON(url, function(d){
+        console.log(d);
+      });
+    }else{
+      console.log('Oh no.');
+    }
+    spawnPopup(coord, viewProjction.a);
   });
+
+  function spawnPopup(coord,projection){
+    var transformed_coordinate = ol.proj.transform(coord, projection, 'EPSG:4326');
+    var popup = $("<div class='popup'>"+transformed_coordinate+"</div>");
+    var overlay = new ol.Overlay({
+      element: popup
+    });
+    map.addOverlay(overlay);
+    overlay.setPosition(coord);
+  }
 }
 
 function removeTopLayer(){
