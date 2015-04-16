@@ -1,4 +1,9 @@
-var map,baselayer,vectorLayer,vectorLayer2,styleCache,geoLayer;
+var map,
+    baselayer,
+    vectorLayer,
+    vectorLayer2,
+    styleCache,
+    geoLayer;
 
 function init(){
   map = new ol.Map({
@@ -78,6 +83,50 @@ function init(){
   //map.addLayer(vectorLayer);
   map.addLayer(vectorLayer2);
   map.addLayer(geoLayer);
+
+  //Attribution
+  // var myAttributionControl = new ol.control.Attribution({
+  //   className: 'ol-attribution',
+  //   target: null
+  // });
+  // map.addControl(myAttributionControl);
+
+  //MousePosition
+  var mousePosition = new ol.control.MousePosition({
+    className: 'ol-full-screen',
+    coordinateFormat: ol.coordinate.createStringXY(4),
+    projection: 'EPSG:4326',
+    className: 'custom-mouse-position',
+    target: undefined,
+    undefinedHTML: '&nbsp;'
+  });
+  map.addControl(mousePosition);
+
+  //FullScreen
+  var myFullScreenControl = new ol.control.FullScreen();
+  map.addControl(myFullScreenControl);
+
+  //Rotate
+  //var myRotateControl = new ol.control.Rotate();
+  //map.addControl(myRotateControl);
+
+  //ScaleLine
+  var myScaleControl = new ol.control.ScaleLine();
+  map.addControl(myScaleControl);
+
+  //Zoom
+  var myZoomControl = new ol.control.Zoom();
+  map.addControl(myZoomControl);
+
+  //ZoomSlider
+  var myZoomSliderControl = new ol.control.ZoomSlider();
+  map.addControl(myZoomSliderControl);
+
+  //ZoomToExtent
+  var myZoomToExtentControl = new ol.control.ZoomToExtent({
+    extent: undefined
+  });
+  map.addControl(myZoomToExtentControl);
 }
 
 function removeTopLayer(){
