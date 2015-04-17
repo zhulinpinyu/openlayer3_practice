@@ -5,7 +5,7 @@ var layer = new ol.layer.Tile({
 var center = ol.proj.transform([114.01,22.51],'EPSG:4326','EPSG:3857');
 
 var overlay = new ol.Overlay({
-  element: document.getElementById('overlay'),
+  element: $('#overlay')[0],
   positioning: 'bottom-center'
 });
 
