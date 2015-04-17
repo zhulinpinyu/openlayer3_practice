@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Animated Map</title>
+  <link rel="stylesheet" type="text/css" href="../assets/styles/ol-v3.4.0.css">
+  <link rel="stylesheet" type="text/css" href="../assets/styles/samples.css">
+  <script src="../assets/js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="../assets/js/ol-v3.4.0.js"></script>
+</head>
+<body>
+<div id="map" class="map"></div>
+<button onclick="doBounce(shenzhen)">Bounce To Shenzhen</button>
+<button onclick="doBounce(xian)">Bounce To Xian</button>
+<button onclick="doBounce(shihezi)">Bounce To Shihezi</button>
+<button onclick="doPan(shenzhen)">Pan To Shenzhen</button>
+<button onclick="doPan(xian)">Pan To Xian</button>
+<button onclick="doPan(shihezi)">Pan To Shihezi</button>
+<button onclick="doRotate()">Rotate</button>
+<button onclick="doZoom(2)">Zoom out</button>
+<button onclick="doZoom(0.5)">Zoom in</button>
+<script type="text/javascript" src="./map.js"></script>
+<hr/>
+REF: http://openlayersbook.github.io/ch03-charting-the-map-class/example-04.html
+</html>
