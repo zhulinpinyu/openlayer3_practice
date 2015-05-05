@@ -8,7 +8,7 @@ var shihezi = ol.proj.transform([86.01,44.16],'EPSG:4326','EPSG:3857');
 
 var view = new ol.View({
   center: shenzhen,
-  zoom: 8
+  zoom: 12
 });
 
 var map = new ol.Map({
