@@ -8,7 +8,7 @@ var heatmapLayer = new ol.layer.Heatmap({
     projection: 'EPSG:3857'
   }),
   blur: 10,
-  radius: 6,
+  radius: 8,
   opacity: 0.6
 });
 
@@ -16,7 +16,7 @@ var center = new ol.proj.transform([108.02,34.54],'EPSG:4326','EPSG:3857');
 
 var view = new ol.View({
   center: center,
-  zoom: 4
+  zoom: 8
 });
 
 var map = new ol.Map({
