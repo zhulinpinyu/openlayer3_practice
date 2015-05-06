@@ -2,6 +2,13 @@ var baseLayer = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
 
+var mapQuest = new ol.layer.Tile({
+  source: new ol.source.MapQuest({
+      layer: 'osm'
+    }),
+  name: 'MapQuest'
+});
+
 var sz_storesLayer = new ol.layer.Heatmap({
   source: new ol.source.GeoJSON({
     url: './sz_stores.geo.json',
@@ -35,6 +42,6 @@ var view = new ol.View({
 var map = new ol.Map({
   target: 'map',
   renderer: 'canvas',
-  layers: [baseLayer, sz_storesLayer, sh_storesLayer],
+  layers: [mapQuest, sz_storesLayer, sh_storesLayer],
   view: view
 });
