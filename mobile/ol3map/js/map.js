@@ -9,7 +9,7 @@ var baseLayer = new ol.layer.Tile({
 //   })
 // });
 
-var sz_stores_layer = new ol.layer.Heatmap({
+var heatmap_layer = new ol.layer.Heatmap({
   source: new ol.source.GeoJSON({
     url: 'data/sz_stores.geo.json',
     projection: 'EPSG:3857'
@@ -28,11 +28,18 @@ var view = new ol.View({
 
 var map = new ol.Map({
   target: 'map',
-  layers: [baseLayer,sz_stores_layer],
+  layers: [baseLayer],
   view: view,
   controls: []
 });
 
+function addHeatmap(){
+  map.addLayer(heatmap_layer);
+}
+
+function basicMap(){
+  map.removeLayer(heatmap_layer);
+}
 
 function marker(location){
   return new ol.Overlay({
@@ -41,7 +48,7 @@ function marker(location){
   });
 }
 
-function onMouseMove(event){
+function onClickMap(event){
   var coordinate = event.coordinate;
   var pixel = map.getPixelFromCoordinate(coordinate);
   var degrees = ol.proj.transform(coordinate, 'EPSG:3857','EPSG:4326');
@@ -53,12 +60,12 @@ function onMouseMove(event){
   });
   document.location = "ol3map://alert/"+value;
 }
-map.on('click', onMouseMove);
+map.on('click', onClickMap);
 
 
 function setCenter(lat,lon){
-  //var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
-  var location = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
+  var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
+  //var location = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
   map.getView().setCenter(location);
   map.addOverlay(marker(location));
 }
