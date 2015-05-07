@@ -2,12 +2,12 @@ var baseLayer = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
 
-var countries = new ol.layer.Vector({
-  source: new ol.source.GeoJSON({
-    projection: 'EPSG:3857',
-    url: '../ol3map/shenzhen.json'
-  })
-});
+// var countries = new ol.layer.Vector({
+//   source: new ol.source.GeoJSON({
+//     projection: 'EPSG:3857',
+//     url: '../ol3map/shenzhen.json'
+//   })
+// });
 
 var center = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
 //-122.0312186,37.33233141
@@ -18,7 +18,7 @@ var view = new ol.View({
 
 var map = new ol.Map({
   target: 'map',
-  layers: [baseLayer,countries],
+  layers: [baseLayer],
   view: view,
   controls: []
 });
