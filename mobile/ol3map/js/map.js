@@ -23,7 +23,7 @@ var center = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
 //-122.0312186,37.33233141
 var view = new ol.View({
   center: center,
-  zoom: 14
+  zoom: 18
 });
 
 var map = new ol.Map({
@@ -44,9 +44,14 @@ function basicMap(){
 function marker(location){
   return new ol.Overlay({
     position: location,
-    element: $('<span class="glyphicon glyphicon-map-marker" aria-hidden="true" style="color: darkviolet; font-size: 21px;"></span>')
+    element: $('<span class="glyphicon glyphicon-map-marker" aria-hidden="true" style="color: darkviolet; font-size: 21px; left: -12px; top: -23px;"></span>')
   });
 }
+
+map.on('click', function(e){
+  var coord = e.coordinate;
+  map.addOverlay(marker(coord));
+});
 
 function onClickMap(event){
   var coordinate = event.coordinate;
