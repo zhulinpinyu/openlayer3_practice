@@ -48,9 +48,16 @@ function marker(location){
   });
 }
 
+function pin(location){
+  return new ol.Overlay({
+    position: location,
+    element: $('<span class="glyphicon glyphicon-flag" aria-hidden="true" style="color: rgb(249, 18, 18); font-size: 26px; top: -26px; left: -2px"></span>')
+  });
+}
+
 map.on('click', function(e){
   var coord = e.coordinate;
-  map.addOverlay(marker(coord));
+  map.addOverlay(pin(coord));
 });
 
 function onClickMap(event){
