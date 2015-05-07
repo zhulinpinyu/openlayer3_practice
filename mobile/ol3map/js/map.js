@@ -45,18 +45,20 @@ function onMouseMove(event){
   var coordinate = event.coordinate;
   var pixel = map.getPixelFromCoordinate(coordinate);
   var degrees = ol.proj.transform(coordinate, 'EPSG:3857','EPSG:4326');
-  var hdms = ol.coordinate.toStringHDMS(degrees)
+  //var hdms = ol.coordinate.toStringHDMS(degrees)
+  var value = "";
   map.forEachFeatureAtPixel(pixel, function(feature){
-    console.log(feature.get('lgl_biz_name'));
     //var value = feature.get('name')+"("+hdms+")"
-    //document.location = "ol3map://alert/"+value;
+     value += " " + feature.get('lgl_biz_name');
   });
+  document.location = "ol3map://alert/"+value;
 }
 map.on('click', onMouseMove);
 
 
 function setCenter(lat,lon){
-  var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
+  //var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
+  var location = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
   map.getView().setCenter(location);
   map.addOverlay(marker(location));
 }
