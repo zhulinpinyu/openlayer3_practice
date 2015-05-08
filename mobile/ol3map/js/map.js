@@ -23,7 +23,7 @@ var center = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
 //-122.0312186,37.33233141
 var view = new ol.View({
   center: center,
-  zoom: 18
+  zoom: 14
 });
 
 var map = new ol.Map({
@@ -48,17 +48,17 @@ function marker(location){
   });
 }
 
-function pin(location){
+function pin_flag(location){
   return new ol.Overlay({
     position: location,
     element: $('<span class="glyphicon glyphicon-flag" aria-hidden="true" style="color: rgb(249, 18, 18); font-size: 26px; top: -26px; left: -2px"></span>')
   });
 }
 
-map.on('click', function(e){
+function pin(e){
   var coord = e.coordinate;
-  map.addOverlay(pin(coord));
-});
+  map.addOverlay(pin_flag(coord));
+}
 
 function onClickMap(event){
   var coordinate = event.coordinate;
@@ -73,7 +73,7 @@ function onClickMap(event){
   document.location = "ol3map://alert/"+value;
 }
 map.on('click', onClickMap);
-
+map.on('click', pin);
 
 function setCenter(lat,lon){
   var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
