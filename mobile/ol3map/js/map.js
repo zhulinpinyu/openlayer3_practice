@@ -33,6 +33,21 @@ var map = new ol.Map({
   controls: []
 });
 
+p1 = {
+  name: "KFC",
+  size: 20
+}
+
+p2 = {
+  name: "MCD",
+  size: 31
+}
+
+
+
+pin_flag(22.5449213989154,114.02119626522052,p1);
+pin_flag(22.5349213989154,114.03119626522052,p2);
+
 function addHeatmap(){
   map.addLayer(heatmap_layer);
 }
@@ -48,14 +63,23 @@ function marker(location){
   });
 }
 
-function pin_flag(lat,lon){
+function pin_flag(lat,lon,properties){
   var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
   var flag = new ol.Overlay({
     position: location,
     element: $('<span class="glyphicon glyphicon-flag" aria-hidden="true" style="color: rgb(249, 18, 18); font-size: 26px; top: -26px; left: -2px"></span>')
   });
+  flag.setProperties(properties);
   map.addOverlay(flag);
 }
+
+var overlays = map.getOverlays();
+overlays.forEach(function(overlay){
+  $(overlay.getElement()[0]).on("click",function(e){
+    var info = overlay.getPosition() + "-->" + overlay.getProperties().name;
+    document.location = "ol3map://alert/"+info;
+  });
+});
 
 function pin(e){
   var coord_3857 = e.coordinate;
@@ -79,8 +103,8 @@ function pin(e){
 map.on('click', pin);
 
 function setCenter(lat,lon){
-  var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
-  //var location = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
+  //var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
+  var location = ol.proj.transform([114.02119626522052,22.5449213989154],'EPSG:4326','EPSG:3857');
   map.getView().setCenter(location);
   map.addOverlay(marker(location));
 }
