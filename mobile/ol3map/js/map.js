@@ -48,15 +48,19 @@ function marker(location){
   });
 }
 
-function pin_flag(lat,lon,properties){
+function pin_flag(lat,lon,name){
   var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
   var flag = new ol.Overlay({
     position: location,
     element: $('<span class="glyphicon glyphicon-flag" aria-hidden="true" style="color: rgb(249, 18, 18); font-size: 26px; top: -26px; left: -2px"></span>')
   });
-  flag.setProperties(properties);
+
+  flag.setProperties({
+    name: name
+  });
+
   $(flag.getElement()[0]).on("click",function(e){
-    document.location = "ol3map://alert/"+properties["name"];
+    document.location = "ol3map://alert/"+flag.getProperties().name;
   });
   map.addOverlay(flag);
 }
