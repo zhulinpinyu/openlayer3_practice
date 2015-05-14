@@ -19,11 +19,11 @@ var heatmap_layer = new ol.layer.Heatmap({
   opacity: 0.6
 });
 
-var center = ol.proj.transform([114.02,22.54],'EPSG:4326','EPSG:3857');
+var center = ol.proj.transform([114.02119626522052, 22.5349213989154],'EPSG:4326','EPSG:3857');
 //-122.0312186,37.33233141
 var view = new ol.View({
   center: center,
-  zoom: 14
+  zoom: 16
 });
 
 var map = new ol.Map({
@@ -48,31 +48,34 @@ function marker(location){
   });
 }
 
-function pin_flag(location){
-  return new ol.Overlay({
+function pin_flag(lat,lon){
+  var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
+  var flag = new ol.Overlay({
     position: location,
     element: $('<span class="glyphicon glyphicon-flag" aria-hidden="true" style="color: rgb(249, 18, 18); font-size: 26px; top: -26px; left: -2px"></span>')
   });
+  map.addOverlay(flag);
 }
 
 function pin(e){
-  var coord = e.coordinate;
-  map.addOverlay(pin_flag(coord));
+  var coord_3857 = e.coordinate;
+  var coord_4326 = ol.proj.transform(coord_3857, 'EPSG:3857', 'EPSG:4326');
+  document.location = "ol3map://alert/"+coord_4326;
 }
 
-function onClickMap(event){
-  var coordinate = event.coordinate;
-  var pixel = map.getPixelFromCoordinate(coordinate);
-  var degrees = ol.proj.transform(coordinate, 'EPSG:3857','EPSG:4326');
-  //var hdms = ol.coordinate.toStringHDMS(degrees)
-  var value = "";
-  map.forEachFeatureAtPixel(pixel, function(feature){
-    //var value = feature.get('name')+"("+hdms+")"
-     value += " " + feature.get('lgl_biz_name');
-  });
-  document.location = "ol3map://alert/"+value;
-}
-map.on('click', onClickMap);
+// function onClickMap(event){
+//   var coordinate = event.coordinate;
+//   var pixel = map.getPixelFromCoordinate(coordinate);
+//   var degrees = ol.proj.transform(coordinate, 'EPSG:3857','EPSG:4326');
+//   //var hdms = ol.coordinate.toStringHDMS(degrees)
+//   var value = "";
+//   map.forEachFeatureAtPixel(pixel, function(feature){
+//     //var value = feature.get('name')+"("+hdms+")"
+//      value += " " + feature.get('lgl_biz_name');
+//   });
+//   document.location = "ol3map://alert/"+value;
+// }
+// map.on('click', onClickMap);
 map.on('click', pin);
 
 function setCenter(lat,lon){
