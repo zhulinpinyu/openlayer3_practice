@@ -33,21 +33,6 @@ var map = new ol.Map({
   controls: []
 });
 
-p1 = {
-  name: "KFC",
-  size: 20
-}
-
-p2 = {
-  name: "MCD",
-  size: 31
-}
-
-
-
-pin_flag(22.5449213989154,114.02119626522052,p1);
-pin_flag(22.5349213989154,114.03119626522052,p2);
-
 function addHeatmap(){
   map.addLayer(heatmap_layer);
 }
@@ -70,21 +55,16 @@ function pin_flag(lat,lon,properties){
     element: $('<span class="glyphicon glyphicon-flag" aria-hidden="true" style="color: rgb(249, 18, 18); font-size: 26px; top: -26px; left: -2px"></span>')
   });
   flag.setProperties(properties);
+  $(flag.getElement()[0]).on("click",function(e){
+    document.location = "ol3map://alert/"+properties["name"];
+  });
   map.addOverlay(flag);
 }
-
-var overlays = map.getOverlays();
-overlays.forEach(function(overlay){
-  $(overlay.getElement()[0]).on("click",function(e){
-    var info = overlay.getPosition() + "-->" + overlay.getProperties().name;
-    document.location = "ol3map://alert/"+info;
-  });
-});
 
 function pin(e){
   var coord_3857 = e.coordinate;
   var coord_4326 = ol.proj.transform(coord_3857, 'EPSG:3857', 'EPSG:4326');
-  document.location = "ol3map://alert/"+coord_4326;
+  document.location = "ol3map://pin/"+coord_4326;
 }
 
 // function onClickMap(event){
