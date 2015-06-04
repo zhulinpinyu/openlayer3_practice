@@ -3,7 +3,7 @@ var baiduLayer = new ol.layer.Tile({
   source: tilesource
 });
 
-var center = new ol.proj.transform([114.021,22.51],'EPSG:4326','EPSG:3857');
+var center = new ol.proj.transform([114.03,22.53],'EPSG:4326','EPSG:3857');
 
 var view = new ol.View({
   center:  center,
