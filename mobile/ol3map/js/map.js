@@ -87,8 +87,8 @@ function pin(e){
 map.on('click', pin);
 
 function setCenter(lat,lon){
-  //var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
-  var location = ol.proj.transform([114.02119626522052,22.5449213989154],'EPSG:4326','EPSG:3857');
+  var location = ol.proj.transform([lon,lat],'EPSG:4326','EPSG:3857');
+  //var location = ol.proj.transform([114.02119626522052,22.5449213989154],'EPSG:4326','EPSG:3857');
   map.getView().setCenter(location);
   map.addOverlay(marker(location));
 }
