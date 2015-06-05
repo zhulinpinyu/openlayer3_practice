@@ -1,6 +1,6 @@
 var local_osm_layer = new ol.layer.Tile({
   source: new ol.source.XYZ({
-    url: "http://10.211.55.25/osm/{z}/{x}/{y}.png"
+    url: "http://10.211.55.24/osm/{z}/{x}/{y}.png"
     //"http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"
   })
 });
@@ -29,6 +29,6 @@ var view = new ol.View({
 
 var map = new ol.Map({
   target: 'map',
-  layers: [google_layer],
+  layers: [local_osm_layer],
   view: view
 });
